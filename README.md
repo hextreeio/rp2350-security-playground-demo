@@ -1,10 +1,19 @@
-# 1_simple_loop
+# RP2350 Security Playground Demo
+
+
+This firmware demonstrates some of the security testing features of the RP2350 security playground, mainly focusing on bypassing the glitch-detector and glitching the OTP.
+
+## Building
+
+```
+mkdir build
+cmake -DPICO_PLATFORM=rp2350 -DPICO_BOARD=pico2 ..
+make
+```
+
+## Glitch Detector Mode
 
 This example exposes a very simple nested loop as a glitch-target. On reset, the target will send "R" to the serial console (with TX on GPIO 12), on regular execution of the loop it will send "N", and on a successful glitch it will send "X".
-
-Two binaries will be built by this project:
-- 1_simple_loop.uf2 - Just the simple loop glitch target
-- 1_simple_loop_glitch_detector.uf2 - The same code but with the glitch-detector enabled and set to high sensitivity
 
 The firmware also activates the watchdog to ensure that an automatic restart occurs if the chip hangs.
 
@@ -27,3 +36,9 @@ if (i != OUTER_LOOP_CNT || j != INNER_LOOP_CNT || cnt != (OUTER_LOOP_CNT * INNER
 For triggering:
 - A trigger signal is generated on IO 14
 - While the loop is running IO 15 is pulled high to allow for positioning the glitch better on an oscilloscope
+
+## OTP Glitching
+
+To attempt to glitch OTP values in CRIT1 this mode will read out CRIT1 and send it out via UART.
+
+Note that there's a strange behavior where the value will appear corrupted, but will not actually be corrupted when checked in if-conditions etcpp.
