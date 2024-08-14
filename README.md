@@ -3,6 +3,8 @@
 
 This firmware demonstrates some of the security testing features of the RP2350 security playground, mainly focusing on bypassing the glitch-detector and glitching the OTP.
 
+![](assets/board.jpeg)
+
 ## Building
 
 ```
